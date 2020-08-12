@@ -2,7 +2,7 @@ from flask_blog.models import User, Post
 from flask_blog.forms import RegistrationForm, LoginForm
 from flask_blog import app, db, bcrypt
 from flask import render_template, redirect, url_for, flash
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 my_dict = {'name': 'Jack', 'age': 26}
 @app.route("/")
@@ -54,3 +54,9 @@ def logout():
     title = "Logout"
     logout_user()
     return redirect(url_for("home"))
+
+@app.route("/account")
+@login_required
+def account():
+    title = "Account"
+    return render_template("account.html", title=title)
